@@ -8,7 +8,7 @@ public class StudentManager {
   public Student find(long studentID){
     Student student=Student.getValueOf(studentID);
     if (student == null) {
-      throw new StudentExceptions("Could not find student with ID " + studentID);
+      throw new StudentNotFoundException("Could not find student with ID " + studentID);
     }
     return student;
   }
@@ -16,8 +16,12 @@ public class StudentManager {
   public static void main(String[] args){
     StudentManager manager = new StudentManager();
     for (int i = 0; i < IDs.length; i++) {
-      Student student = manager.find(IDs[i]);
+      try {
+        Student student = manager.find(IDs[i]);
         System.out.println("Student name " + student.getName());
+      }catch (StudentNotFoundException e) {
+        System.out.println(e.getMessage());
+      }
     }
 
   }
